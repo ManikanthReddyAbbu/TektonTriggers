@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: el-getting-started-listener #el-ingress
+  namespace: getting-started
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  tls:
+  - hosts:
+    - event-listener.info
+    secretName: ingresssecret
+  rules:
+  - host: event-listener.info
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: el-getting-started-listener
+          servicePort: 8080
